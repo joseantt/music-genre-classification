@@ -22,8 +22,8 @@ def home(request):
     return render(request, 'home.html')
 
 
-# path: /upload
-def upload(request):
+# path: /results/
+def results(request):
     if request.method == 'POST':
         if 'audio' not in request.FILES:
             return render(request, 'result.html', {'error': 'No se subió ningún archivo de audio'})
