@@ -47,4 +47,4 @@ This Django-based web application allows users to upload an audio file, processe
 
 ### Model
 
-The model used for genre prediction is pre-trained and saved as `modelo_definitivo2.keras`. The model predicts the genre based on the mel-spectrogram of the uploaded audio file.
+The model used for genre prediction was trained in the notebook `final_project_best_model.ipynb` saved inside the `notebooks` folder. The model is saved as `modelo_definitivo2.keras`. The model predicts the genre based on the mel-spectrogram of the uploaded audio file.
