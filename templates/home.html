@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        #file {
+            display: none;
+        }
+        label[for="file"] {
+            width: 50px;
+            height: 50px;
+            background-image: url('https://cdn0.iconfinder.com/data/icons/dicticons-files-folders/32/file_audio_upload-512.png');
+            background-size: cover;
+            cursor: pointer;
+        }
+        #file-name {
+            margin-top: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form enctype="multipart/form-data" action="/upload/" method="POST">
+        <input type="file" id="file" name="audio" accept="audio/*" required onchange="updateFileName()">
+        {% csrf_token %}
+        <label for="file"></label>
+        <span id="file-name">No se ha seleccionado un archivo</span>
+        <input type="submit" value="Predecir">
+    </form>
+    <script>
+        function updateFileName() {
+            var input = document.getElementById('file');
+            var fileName = document.getElementById('file-name');
+
+            fileName.textContent = input.files.length > 0 ? input.files[0].name : 'No file chosen';
+        }
+    </script>
+</body>
+</html>
