@@ -23,23 +23,24 @@ def home(request):
 
 
 # path: /upload
-@csrf_exempt
 def upload(request):
     if request.method == 'POST':
-        if request.method == 'POST' and request.FILES.get('audio'):
-            audio_file = request.FILES['audio']
+        if 'audio' not in request.FILES:
+            return render(request, 'result.html', {'error': 'No se subió ningún archivo de audio'})
+
+        audio_file = request.FILES['audio']
 
         try:
             y, sr = librosa.load(audio_file, sr=44100)  # Load audio file from request
         except:
-            return JsonResponse({'error': 'Error loading audio file'}, status=400)
+            return render(request, 'result.html', {'error': 'Error al cargar el archivo de audio'})
 
         # Get the duration of the audio
         duration = librosa.get_duration(y=y, sr=sr)
 
         if duration < 30:
-            return JsonResponse({'error': 'Audio is too short. Minimum duration is 30 seconds.'}, status=400)
-
+            return render(request, 'result.html', {'error': 'El audio es demasiado corto. La duración mínima es de 30 '
+                                                            'segundos.'})
         if duration > 30:
             y = y[:int(30 * sr)]  # Trim the audio to 30 seconds
 
@@ -75,6 +76,7 @@ def upload(request):
         predictions = model.predict(img_array, verbose=0)
         top3_indices = predictions[0].argsort()[-3:][::-1]
         top3_labels = [label_dict[index] for index in top3_indices]
+
         # Create a dictionary to store the labels and their corresponding probabilities
         result = {'first': top3_labels[0],
                   'second': top3_labels[1],

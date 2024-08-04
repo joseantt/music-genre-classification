@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction Result</title>
+    {% if error %}
+        <title>Error</title>
+    {% else %}
+        <title>Prediction Result</title>
+    {% endif %}
     <style>
         body {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -30,6 +34,9 @@
             font-size: 18px;
             color: #555;
         }
+        .error {
+            color: red;
+        }
         button {
             padding: 10px 20px;
             background-color: #007BFF;
@@ -45,12 +52,16 @@
 </head>
 <body>
 <div class="container">
-    <h1>Resultado de la predicción</h1>
-    <div id="first" class="result"> Género predominante: {{ first }} </div>
-    <div id="secondary" class="result"> Otros posibles géneros: {{ second }} - {{ third }}</div><br>
     
+    {% if error %}
+        <h1>Error</h1>
+        <div class="error">{{ error }}</div><br>
+    {% else %}
+        <h1>Resultado de la predicción</h1>
+        <div id="first" class="result">Género predominante: {{ first }}</div>
+        <div id="secondary" class="result">Otros posibles géneros: {{ second }} - {{ third }}</div><br>
+    {% endif %}
     <button onclick="window.location.href = '/';">Regresar</button>
 </div>
-
 </body>
 </html>
