@@ -45,7 +45,7 @@
     </style>
 </head>
 <body>
-    <form enctype="multipart/form-data" action="/upload/" method="POST">
+    <form enctype="multipart/form-data" action="/results/" method="POST">
         <input type="file" id="file" name="audio" accept="audio/*" required onchange="updateFileName()">
         {% csrf_token %}
         <label for="file"></label>
