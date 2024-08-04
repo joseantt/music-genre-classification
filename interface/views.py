@@ -17,10 +17,12 @@ label_dict = {0: 'Blues', 1: 'Classical', 2: 'Country',
               6: 'Metal', 7: 'Pop', 8: 'Reggae', 9: 'Rock'}
 
 
+# path: /
 def home(request):
     return render(request, 'home.html')
 
 
+# path: /upload
 @csrf_exempt
 def upload(request):
     if request.method == 'POST':
@@ -31,6 +33,15 @@ def upload(request):
             y, sr = librosa.load(audio_file, sr=44100)  # Load audio file from request
         except:
             return JsonResponse({'error': 'Error loading audio file'}, status=400)
+
+        # Get the duration of the audio
+        duration = librosa.get_duration(y=y, sr=sr)
+
+        if duration < 30:
+            return JsonResponse({'error': 'Audio is too short. Minimum duration is 30 seconds.'}, status=400)
+
+        if duration > 30:
+            y = y[:int(30 * sr)]  # Trim the audio to 30 seconds
 
         y, _ = librosa.effects.trim(y)
         mel = librosa.feature.melspectrogram(y=y, sr=sr, n_fft=2048, hop_length=512, n_mels=128, fmax=11000)
