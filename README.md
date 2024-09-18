@@ -1,5 +1,3 @@
-# README
-
 ## Audio Genre Classification Web App
 
 This Django-based web application allows users to upload an audio file, processes it, and predicts the genre of the music. The genres include Blues, Classical, Country, Disco, Hiphop, Jazz, Metal, Pop, Reggae, and Rock. The application uses a pre-trained Keras model to classify the genre of the audio. The model was trained on the GTZAN dataset and achieved a test accuracy of 69%.
